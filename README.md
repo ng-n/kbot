@@ -28,6 +28,9 @@ To use the bot, you need a Telegram account and follow these steps:
     /start
     /start hello
 ```
-    
+8. Check bitcoin price:
+```
+    /getbitcoinprice
+```
 
 

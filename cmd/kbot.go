@@ -9,6 +9,10 @@ import (
 	"log"
 	"os"
 	"time"
+	"net/http"
+	"encoding/json"
+	"io/ioutil"
+	"strconv"
 
 	"github.com/spf13/cobra"
 	telebot "gopkg.in/telebot.v3"
@@ -20,7 +24,7 @@ var (
 )
 
 // Get appVersion ex. v1.0.1 from CLI
-var appVersion string
+var appVersion = "Version"
 
 // kbotCmd represents the kbot command
 var kbotCmd = &cobra.Command{
@@ -60,11 +64,48 @@ to quickly create a Cobra application.`,
 			return err
 		})
 
+		// Check Bitcoin Price
+		kbot.Handle("/getbitcoinprice", func(m telebot.Context) error{
+			price, err := getBitcoinPrice()
+			if err != nil {
+				return err
+			}
+			err = m.Send(fmt.Sprintf("The current price of Bitcoin is $%.2f USD", price))
+			return err
+		})
+
 		kbot.Start()
 
 	},
 }
 
+func getBitcoinPrice() (float64, error) {
+	url := "https://api.coincap.io/v2/assets/bitcoin"
+	resp, err := http.Get(url)
+	if err != nil {
+		return 0, err
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return 0, err
+	}
+
+	var data map[string]interface{}
+	err = json.Unmarshal(body, &data)
+	if err != nil {
+		return 0, err
+	}
+
+	priceStr := data["data"].(map[string]interface{})["priceUsd"].(string)
+	price, err := strconv.ParseFloat(priceStr, 64)
+	if err != nil {
+		return 0, err
+	}
+
+	return price, nil
+}
 func init() {
 	rootCmd.AddCommand(kbotCmd)
 
