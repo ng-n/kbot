@@ -3,7 +3,8 @@
 
 ## My Telegram Bot t.me/ng_n_bot
 
-This is a Telegram bot built with Go and Cobra library.
+This is a Telegram bot built with Go and Cobra library. 
+> You can check the bitcoin price by /getbitcoinprice command.
 
 ## Usage
 
@@ -11,7 +12,7 @@ To use the bot, you need a Telegram account and follow these steps:
 
 1. Start a chat with [@BotFather](https://t.me/botfather) and create a new bot.
 2. Type down `/newbot`, then write a name of your new bot, ex. `kbot`.
-3. Then type down a username for your bot ex. `ng-n_bot`.
+3. Then type down a username for your bot ex. `ng_n_bot`.
 4. Copy the bot token provided by @BotFather and save it as an environment variable named `TELE_TOKEN`.
 ``` 
     export TELE_TOKEN=<token>
