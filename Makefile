@@ -4,7 +4,7 @@ REGISTRY=ghcr.io
 REPOSITORY=ng-n
 VERSION=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
 TARGETOS=linux
-TARGETARCH=arm64
+TARGETARCH=amd64
 
 help:
 	@echo "Hello QA Engineer!"
