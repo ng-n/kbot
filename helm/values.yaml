@@ -9,7 +9,7 @@ image:
   repository: ng-n
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1.0.7-df4c495"
+  tag: "v1.0.7-267d9fe"
   os: linux
   arch: amd64
 secret:
