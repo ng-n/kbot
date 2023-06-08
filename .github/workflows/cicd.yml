@@ -60,7 +60,7 @@ jobs:
     # Updates the '.image.X' fields in the 'helm/values.yaml with the value of VERSION, TARGETOS and TARGETARCH'
     - uses: mikefarah/yq@master
       with:
-        cmd: yq -i '.image.tag=strenv(VERSION)' -i '.image.os=strenv(TARGETOS)' -i '.image.arch=strenv(TARGETARCH)' helm/values.yaml
+        cmd: yq -i '.image.tag=strenv(VERSION)' -i '.image.os=linux' -i '.image.arch=amd64' helm/values.yaml
     
     - run: |
         git config user.name github-actions
