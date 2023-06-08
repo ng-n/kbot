@@ -4,7 +4,9 @@
 
 replicaCount: 1
 image:
-  repository: ngana0
+  #repository: ngana0
+  registry: ghcr.io
+  repository: ng-n
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "v1.0.7-fa134b6"
