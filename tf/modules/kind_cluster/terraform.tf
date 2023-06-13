@@ -2,7 +2,7 @@ terraform {
   required_providers {
     kind = {
       source = "justenwalker/kind"
-      version = "latest"
+      version = "0.17.0"
     }
   }
 }
