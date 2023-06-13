@@ -1,1 +1,0 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"gke_cluster","Source":"git::https://github.com/ng-n/kbot.git//tf/modules/gke_cluster","Dir":".terraform/modules/gke_cluster/tf/modules/gke_cluster"}]}
