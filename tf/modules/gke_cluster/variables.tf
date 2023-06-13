@@ -12,7 +12,7 @@ variable "GKE_CLUSTER_NAME" {
 
 variable "GKE_POOL_NAME" {
     type        = string
-    default     = "develop_pool"
+    default     = "pool"
     description = "GKE pool name"
 }
 
