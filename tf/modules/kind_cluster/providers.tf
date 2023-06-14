@@ -1,4 +1,4 @@
 provider "kind" {
-    provider    = "docker"
+    #provider    = "docker"
     kubeconfig  = pathexpand("${path.module}/kind-config")
 }
