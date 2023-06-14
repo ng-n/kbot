@@ -6,7 +6,7 @@ module "gke_cluster" {
 #  source = "git::https://github.com/ng-n/kbot.git//tf/modules/kind_cluster"
 #}
 
-module "github-repository" {
+module "github_repository" {
   source    = "git::https://github.com/ng-n/kbot.git//tf/modules/github-repository"
   github_owner      = var.GITHUB_OWNER
   github_token      = var.GITHUB_TOKEN
@@ -15,7 +15,7 @@ module "github-repository" {
   public_key_openssh_title = "flux0"    
 }
 
-module "fluxcd-flux-bootstrap" {
+module "flux_bootstrap" {
   source = "git::https://github.com/ng-n/kbot.git//tf/modules/fluxcd-flux-bootstrap"
   github_repository = "${var.GITHUB_OWNER}/${var.FLUX_GITHUB_REPO}"
   #private_key       = module.tls_private_key.private_key_pem
