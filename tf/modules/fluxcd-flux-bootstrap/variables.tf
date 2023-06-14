@@ -21,3 +21,7 @@ variable "target_path" {
     description = "Flux manifests subdirectory"
 }
 
+variable "private_key" {
+  type        = string
+  description = "The private key used to authenticate with the Git repository"
+}
