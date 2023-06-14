@@ -22,7 +22,7 @@ module "fluxcd-flux-bootstrap" {
   config_path       = module.gke_cluster.kubeconfig
 }
 
-module "tls_private_keys" {
+module "tls_private_key" {
   source    = "git::https://github.com/ng-n/kbot.git//tf/modules/hashicorp-tls-keys"
   algorithm = "RSA"
 }
