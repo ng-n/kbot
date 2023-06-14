@@ -8,3 +8,16 @@ variable "GOOGLE_REGION" {
   default     = "us-central1-c"
   description = "GCP region name"
 }
+
+variable "GITHUB_OWNER" {
+
+
+}
+
+variable "GITHUB_TOKEN" {
+
+}
+
+variable "FLUX_GITHUB_REPO" {
+
+}
