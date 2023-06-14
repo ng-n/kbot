@@ -1,8 +1,9 @@
 # This file is maintained automatically by "terraform init".
 # Manual edits may be lost in future updates.
 
-provider "registry.terraform.io/hashicorp/github" {
-  version = "5.26.0"
+provider "registry.terraform.io/integrations/github" {
+  version     = "5.26.0"
+  constraints = ">= 5.9.1"
   hashes = [
     "h1:IhfJlQOOpjF74ojSnWFH6RxCdkNCeubN4YSw/b4MKV8=",
     "zh:09236b5396ec086b3d6c06cfe4160185ef0364d2f99deea00576d3ad5864db49",
