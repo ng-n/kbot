@@ -21,6 +21,3 @@ variable "target_path" {
     description = "Flux manifests subdirectory"
 }
 
-variable "" {
-    
-}

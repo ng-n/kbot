@@ -11,7 +11,7 @@ module "github-repository" {
   github_owner      = var.GITHUB_OWNER
   github_token      = var.GITHUB_TOKEN
   repository_name   = var.FLUX_GITHUB_REPO
-  public_key_openssh    = module.tls_private_key.public_key_openssh
+  public_key_openssh    = module.tls_private_key.public_key_openssh    
 }
 
 module "fluxcd-flux-bootstrap" {
