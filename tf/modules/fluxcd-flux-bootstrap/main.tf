@@ -1,7 +1,9 @@
 provider "flux" {
 
     kubernetes = {
-        config_path = var.config_path
+        #config_path = var.config_path
+        config_path = module.gke_cluster.kubeconfig
+        
     }
 
     git = {
