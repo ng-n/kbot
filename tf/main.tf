@@ -20,7 +20,7 @@ module "github_repository" {
 }
 
 module "flux_bootstrap" {
-  source = "git::https://github.com/ng-n/kbot.git//tf/modules/fluxcd-flux-bootstrap"
+  source = "git::https://github.com/ng-n/kbot.git//tf/modules/fluxcd-flux-bootstrap?ref=tf"
   github_repository = "${var.GITHUB_OWNER}/${var.FLUX_GITHUB_REPO}"
   private_key       = module.tls_private_key.private_key_pem
   config_path       = module.gke_cluster.kubeconfig
