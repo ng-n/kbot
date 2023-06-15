@@ -1,5 +1,6 @@
 module "gke_cluster" {
-  source         = "git::https://github.com/ng-n/kbot.git//tf/modules/gke_cluster?ref=tf"
+  #source         = "git::https://github.com/ng-n/kbot.git//tf/modules/gke_cluster?ref=tf"
+  source         = "git::https://github.com/ng-n/kbot/tree/328b85974e019757ee8b85067437b788c95c9973/tf/modules/gke_cluster"
   GOOGLE_REGION  = var.GOOGLE_REGION
   #GOOGLE_PROJECT = var.GOOGLE_PROJECT
   GKE_NUM_NODES  = 2
