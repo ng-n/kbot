@@ -1,6 +1,5 @@
 module "gke_cluster" {
-  #source         = "git::https://github.com/ng-n/kbot.git//tf/modules/gke_cluster?ref=tf"
-  source         = "git::https://github.com/ng-n/kbot/tree/328b85974e019757ee8b85067437b788c95c9973/tf/modules/gke_cluster"
+  source         = "git::https://github.com/ng-n/kbot/tf/modules/gke_cluster?ref=tf"
   GOOGLE_REGION  = var.GOOGLE_REGION
   #GOOGLE_PROJECT = var.GOOGLE_PROJECT
   GKE_NUM_NODES  = 2
@@ -20,8 +19,7 @@ module "github_repository" {
 }
 
 module "flux_bootstrap" {
-  #source            = "git::https://github.com/ng-n/kbot.git//tf/modules/fluxcd-flux-bootstrap?ref=tf"
-  source            = git::https://github.com/ng-n/kbot/tree/b996b783d8a95c2ea8c9f1980cbd79060ae86ec9/tf/modules/fluxcd-flux-bootstrap"
+  source            = "git::https://github.com/ng-n/kbot/tf/modules/fluxcd-flux-bootstrap?ref=tf"
   github_repository = "${var.GITHUB_OWNER}/${var.FLUX_GITHUB_REPO}"
   private_key       = module.tls_private_key.private_key_pem
   config_path       = module.gke_cluster.kubeconfig
