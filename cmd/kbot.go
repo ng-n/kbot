@@ -164,6 +164,9 @@ func initMetrics(ctx context.Context) {
 }
 
 func init() {
+
+	ctx := context.Background()
+	initMetrics(ctx)
 	rootCmd.AddCommand(kbotCmd)
 
 	// Here you will define your flags and configuration settings.
