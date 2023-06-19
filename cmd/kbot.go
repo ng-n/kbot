@@ -124,7 +124,7 @@ func getBitcoinPrice() (float64, error) {
 
 func pmetrics(ctx context.Context, payload string) {
 	// Get the global MeterProvider and create a new Meter with the name "kbot_bitcoin"
-	meter := otel.GetMeterProvider().Meter("kbot_bitcoin_%s", payload)
+	meter := otel.GetMeterProvider().Meter(fmt.Sprintf("kbot_bitcoin_%s", payload))
 
 	// Get or create an Int64Counter instrument with the name "kbot_bitcoin_<payload>"
 	counter, _ := meter.Int64Counter(fmt.Sprintf("kbot_bitcoin_%s", payload))
