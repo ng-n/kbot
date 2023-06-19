@@ -30,7 +30,7 @@ var (
 	TeleToken = os.Getenv("TELE_TOKEN")
 
 	//MetricsHost exporter host:port
-	MetricsHost = os.Getenv("NETRICS_HOST")
+	MetricsHost = os.Getenv("METRICS_HOST")
 )
 
 // Get appVersion ex. v1.0.1 from CLI
@@ -68,14 +68,17 @@ to quickly create a Cobra application.`,
 		}
 
 		kbot.Handle(telebot.OnText, func(m telebot.Context) error {
-			log.Print(m.Message().Payload, m.Text())
+			//log.Print(m.Message().Payload, m.Text())
+			logger.Info().Str("Payload", m.Text()).Msg(m.Message().Payload)
 
 			payload := m.Message().Payload
+			pmetrics(cmd.Context(), payload)
 
 			switch payload {
 			case "hello":
 				err = m.Send(fmt.Sprintf("Hello I'm kbot %s!", appVersion))
 			}
+
 			return err
 		})
 
@@ -137,11 +140,16 @@ func pmetrics(ctx context.Context, payload string) {
 func initMetrics(ctx context.Context) {
 
 	// Create a new OTLP Metric gRPC exporter with the specified endpoint and options
-	exporter, _ := otlpmetricgrpc.New(
+	exporter, err := otlpmetricgrpc.New(
 		ctx,
 		otlpmetricgrpc.WithEndpoint(MetricsHost),
 		otlpmetricgrpc.WithInsecure(),
 	)
+
+	if err != nil {
+		// Handle the error, such as logging or returning an error message
+		log.Fatalf("Failed to create exporter: %v", err)
+	}
 	// Define the resource with attributes that are common to all metrics.
 	// labels/tags/resources that are common to all metrics.
 	resource := resource.NewWithAttributes(
@@ -165,8 +173,7 @@ func initMetrics(ctx context.Context) {
 
 func init() {
 
-	ctx := context.Background()
-	initMetrics(ctx)
+	initMetrics(context.Background())
 	rootCmd.AddCommand(kbotCmd)
 
 	// Here you will define your flags and configuration settings.
