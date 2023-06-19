@@ -39,7 +39,11 @@ test:
 
 get:
 	go get
-
+	go get github.com/hirosassa/zerodriver
+	go get go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc
+	go get go.opentelemetry.io/otel/sdk/metric
+	go get go.opentelemetry.io/otel/sdk/resource
+	
 build: format get
 	CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -v -o kbot -ldflags "-X="github.com/ng-n/kbot/cmd.appVersion=${VERSION}
 
