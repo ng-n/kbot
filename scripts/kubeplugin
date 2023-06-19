@@ -16,7 +16,7 @@ do
   MEMORY=$(echo $line | awk '{print $3}')
 
   # Output the statistics to the console
-  # "Resource, Namespace, Name, CPU, Memory"  
+  # "Resource, Namespace, Name, CPU, Memory"
   echo "$RESOURCE_TYPE, $NAMESPACE, $NAME, $CPU, $MEMORY"
 
 done
