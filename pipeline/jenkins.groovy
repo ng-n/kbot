@@ -7,6 +7,7 @@ pipeline {
     environment {
         REPOSITORY = "https://github.com/ng-n/kbot"
         BRANCH = "main"
+        PATH = "/usr/local/go/bin:${env.PATH}"
     }
     stages {
         stage('Example') {
