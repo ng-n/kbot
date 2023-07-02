@@ -1,0 +1,97 @@
+#!/usr/bin/env python3
+
+import subprocess
+import platform
+import os
+import sys
+
+def is_gitleaks_installed():
+    try:
+        subprocess.run(['gitleaks', 'version'], check=True, capture_output=True)
+        return True
+    except subprocess.CalledProcessError:
+        return False
+
+def install_gitleaks():
+    system = platform.system().lower()
+    if system == 'linux':
+        if not os.path.exists('gitleaks'):
+            # Middle Level
+            subprocess.call(['git', 'clone', 'https://github.com/gitleaks/gitleaks.git'])
+            os.chdir('gitleaks')
+            subprocess.call(['make', 'build'])
+            os.chdir('..')
+
+            # Senior Level
+            #subprocess.call(['curl', '-SfLO', 'https://github.com/gitleaks/gitleaks/releases/download/v8.17.0/gitleaks_8.17.0_linux_arm64.tar.gz', '|'. 'sh'])
+            #subprocess.call(['tar', '-xf', 'gitleaks_8.17.0_linux_arm64.tar.gz', '&&', 'mv', 'gitleaks', '/usr/local/bin/'])
+            #os.remove('gitleaks_8.17.0_linux_arm64.tar.gz')
+
+    elif system == 'darwin':
+        subprocess.call(['brew', 'install', 'gitleaks'])
+
+        # Senior Level
+        #subprocess.call(['curl', '-SfLO', 'https://github.com/gitleaks/gitleaks/releases/download/v8.17.0/gitleaks_8.17.0_darwin_arm64.tar.gz', '|'. 'sh'])
+        #subprocess.call(['tar', '-xf', 'gitleaks_8.17.0_darwin_arm64.tar.gz', '&&', 'mv', 'gitleaks', '/usr/local/bin/'])
+        #os.remove('gitleaks_8.17.0_darwin_arm64.tar.gz')
+
+    else:
+        print(f'Error: Unsupported system ({system}). Please install gitleaks manually.')
+        sys.exit(1)
+
+def is_gitleaks_enabled():
+    enabled = subprocess.run(['git', 'config', '--bool', 'hooks.gitleaks.enabled'], capture_output=True)
+    return enabled.stdout.strip() == 'true'
+
+def enable_gitleaks():
+    subprocess.run(['git', 'config', 'hooks.gitleaks.enabled', 'true'], check=True)
+
+def check_commit_for_secrets():
+    cmd = ['gitleaks', 'detect', '-v']
+    try:
+        process = subprocess.run(cmd, capture_output=True, text=True)
+        output = process.stdout.strip()
+
+        lines = output.split('\n')
+        leaks_found = False
+
+        # Outputs information where leaks happened: File name, Line number and Commit number.
+        # Hide secrets from verbose output
+        for i in range(len(lines)):
+            if lines[i].startswith('File:'):
+                file_info = lines[i].strip()
+                line_info = lines[i+1].strip()
+                commit_info = lines[i+2].strip()
+                
+                print("Leaks found. Here is data about the leaks below.")
+                print(file_info)
+                print(line_info)
+                print(commit_info)
+                print()
+                leaks_found = True
+
+
+        if not leaks_found:
+            print("No leaks found.")
+    except subprocess.CalledProcessError:
+        print("An error occurred while running gitleaks.")
+
+if __name__ == "__main__":
+    try:
+        if is_gitleaks_installed():
+            print("Gitleaks is installed. Continuing...")
+        else:
+            print("Installing Gitleaks...")
+            install_gitleaks()
+            print("Gitleaks installation completed.")
+
+        if not is_gitleaks_enabled():
+            print("Gitleaks is not enabled. Enabling...")
+            enable_gitleaks()
+            print("Gitlekas is enabled.")
+
+        print("Checking commit for secrets...")
+        check_commit_for_secrets()
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        sys.exit(1)
