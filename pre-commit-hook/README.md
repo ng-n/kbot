@@ -30,7 +30,8 @@ Install the git hook scripts
 pre-commit install
 ```
 Now you can commit your changes.
-``` git commit -m "test"
+``` 
+git commit -m "test"
 ...
 Detect hardcoded secrets.....
 ....
