@@ -39,7 +39,7 @@ Detect hardcoded secrets.....
 Release pre-commit hook script with automatic gitleaks installation depending on the OS, with the enable option using git config and the installation based on "curl pipe sh" (Senior level)
 Clone this file to your local repository
 ```
-curl -L0 https://raw.githubusercontent.com/ng-n/kbot/main/pre-commit-hook/pre-commit
+curl -o pre-commit https://raw.githubusercontent.com/ng-n/kbot/main/pre-commit-hook/pre-commit
 cp pre-commit .git/hooks/pre-commit
 chmod +x .git/hooks/pre-commit
 ```
