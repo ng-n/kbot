@@ -83,7 +83,13 @@ jobs:
           if ! gke-gcloud-auth-plugin --version; then
             gcloud components install gke-gcloud-auth-plugin
           fi
-    
+        
+      - name: Grant cluster-admin access to service account 
+        run: |
+          kubectl create clusterrolebinding github-is-now-cluster-admin \
+            --clusterrole=cluster-admin \
+            --serviceaccount=default:default
+
       - name: Apply Kubernetes Secret Manifest
         run: |
           kubectl apply -f secret-manifest.yaml
