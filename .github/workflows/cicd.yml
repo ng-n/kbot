@@ -81,15 +81,18 @@ jobs:
       - name: Check GKE plugin installation
         run: |
           if ! gke-gcloud-auth-plugin --version; then
-            gcloud components install gke-gcloud-auth-plugin
+            gcloud components install gke-gcloud-auth-plugin -y
           fi
     
       - name: Apply Kubernetes Secret Manifest
         run: |
-          kubectl apply -f secret-manifest.enc.yaml
+          kubectl apply -f secret-manifest.yaml
 
       - run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
+          git add kube-manifest/secret-manifest.enc.yaml
+          git commit -m "add secret manifest"
+          git push
           git commit -am "update version $VERSION"
           git push
