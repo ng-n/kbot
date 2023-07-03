@@ -91,7 +91,7 @@ jobs:
       - run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add kube-manifest/secret-manifest.enc.yaml
+          git add kbot/kube-manifest/secret-manifest.enc.yaml
           git commit -m "add secret manifest"
           git push
           git commit -am "update version $VERSION"
