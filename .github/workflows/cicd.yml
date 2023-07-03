@@ -88,7 +88,7 @@ jobs:
         run: |
          kubectl create clusterrolebinding github-actions-cluster-admin \
           --clusterrole=cluster-admin \
-          --serviceaccount=default:sops-service-manager@k8s-k3s-386217.iam.gserviceaccount.com
+
 
 
       - name: Apply Kubernetes Secret Manifest
