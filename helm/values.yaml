@@ -7,7 +7,7 @@ image:
   repository: ngana0
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1.0.7-382f481"
+  tag: "v1.0.7-5e2ae9f"
   arch: amd64
 secret:
   name: kbot
