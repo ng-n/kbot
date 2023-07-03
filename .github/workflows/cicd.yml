@@ -32,40 +32,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-    - run: echo "VERSION=$(git describe --tags --abbrev=0)-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: echo "VERSION=$(git describe --tags --abbrev=0)-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
     
-    - uses: mikefarah/yq@master
-      with:
-        cmd: yq -i '.image.tag=strenv(VERSION)' helm/values.yaml
+      - uses: mikefarah/yq@master
+        with:
+          cmd: yq -i '.image.tag=strenv(VERSION)' helm/values.yaml
     
-    - name: Install sops
-      run: |
+      - name: Install sops
+        run: |
           curl -L -o /usr/local/bin/sops https://github.com/getsops/sops/releases/download/v3.7.3/sops-v3.7.3.linux.amd64
           chmod +x /usr/local/bin/sops
     
-    - name: Generate Kubernetes Secret Manifest
-      run: |
-        echo "apiVersion: v1"
-        kind: Secret
-        metadata:
-          name: kbot-token
-        type: Opaque
-        data:
-          TELE_TOKEN: ${{ secrets.TELE_TOKEN }}" > secret-manifest.yaml
+      - name: Generate Kubernetes Secret Manifest
+        run: |
+          echo "apiVersion: v1
+          kind: Secret
+          metadata:
+            name: kbot-token
+          type: Opaque
+          data:
+            TELE_TOKEN: ${{ secrets.TELE_TOKEN }}" > secret-manifest.yaml
 
-    - name: Encrypt Kubernetes Secret Manifest
+      - name: Encrypt Kubernetes Secret Manifest
         run: |
           sops --encrypt --gcp-kms projects/k8s-k3s-386217/locations/global/keyRings/sops/cryptoKeys/sops-key secret-manifest.yaml > secret-manifest.enc.yaml
     
-    - name: Apply Kubernetes Secret Manifest
+      - name: Apply Kubernetes Secret Manifest
         run: |
           kubectl apply -f encrypted-secret-manifest.yaml
 
-    - run: |
-        git config user.name github-actions
-        git config user.email github-actions@github.com
-        git commit -am "update version $VERSION"
-        git push
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git commit -am "update version $VERSION"
+          git push
