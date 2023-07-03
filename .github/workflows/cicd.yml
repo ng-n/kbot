@@ -74,8 +74,19 @@ jobs:
         id: install
 
       - name: Configure kubectl with cluster credentials
-        run: gcloud container clusters get-credentials main --zone us-central1-c --project k8s-k3s-386217
+        run: |
+          gcloud container clusters get-credentials main --zone us-central1-c --project k8s-k3s-386217
+          export KUBECONFIG=$HOME/.kube/config
 
+      - name: Check GKE plugin installation
+        run: |
+          if command -v gke-gcloud-auth-plugin >/dev/null 2>&1; then
+            echo "GKE plugin is installed."
+          else
+            echo "GKE plugin is not installed. Please follow the installation instructions."
+            exit 1
+          fi
+    
       - name: Apply Kubernetes Secret Manifest
         run: |
           kubectl apply -f secret-manifest.enc.yaml
