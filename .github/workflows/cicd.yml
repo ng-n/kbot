@@ -56,9 +56,17 @@ jobs:
           data:
             TELE_TOKEN: ${{ secrets.TELE_TOKEN }}" > secret-manifest.yaml
       
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}'
+      - name: 'Setup Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+      - name: 'Use gcloud CLI'
+        run: 'gcloud info'
+      
       - name: Encrypt Kubernetes Secret Manifest
         run: |
-          gcloud auth activate-service-account --key-file=${{ secrets.GCP_SERVICE_ACCOUNT_KEY}}
           sops --encrypt --gcp-kms projects/k8s-k3s-386217/locations/global/keyRings/sops/cryptoKeys/sops-key secret-manifest.yaml > secret-manifest.enc.yaml
     
       - name: Apply Kubernetes Secret Manifest
