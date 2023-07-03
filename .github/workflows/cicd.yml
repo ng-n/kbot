@@ -54,7 +54,7 @@ jobs:
             name: kbot-token
           type: Opaque
           data:
-            TELE_TOKEN: ${{ secrets.TELE_TOKEN }}" > secret-manifest.yaml
+            TELE_TOKEN: $(echo -n '${{ secrets.TELE_TOKEN }}' | base64) > secret-manifest.yaml
       
       - id: 'auth'
         uses: 'google-github-actions/auth@v1'
