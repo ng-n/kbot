@@ -69,6 +69,12 @@ jobs:
         run: |
           sops --encrypt --gcp-kms projects/k8s-k3s-386217/locations/global/keyRings/sops/cryptoKeys/sops-key secret-manifest.yaml > secret-manifest.enc.yaml
     
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v1
+
+      - name: Configure kubectl with cluster credentials
+        run: gcloud container clusters get-credentials main --zone us-central1-c --project k8s-k3s-386217
+        
       - name: Apply Kubernetes Secret Manifest
         run: |
           kubectl apply -f secret-manifest.enc.yaml
