@@ -71,7 +71,7 @@ jobs:
     
       - name: Apply Kubernetes Secret Manifest
         run: |
-          kubectl apply -f encrypted-secret-manifest.yaml
+          kubectl apply -f secret-manifest.enc.yaml
 
       - run: |
           git config user.name github-actions
