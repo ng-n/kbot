@@ -81,7 +81,7 @@ jobs:
       - name: Check GKE plugin installation
         run: |
           if ! gke-gcloud-auth-plugin --version; then
-            gcloud components install gke-gcloud-auth-plugin -y
+            gcloud components install gke-gcloud-auth-plugin
           fi
     
       - name: Apply Kubernetes Secret Manifest
