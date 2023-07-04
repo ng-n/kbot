@@ -140,6 +140,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PAT }}
         run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           gh repo clone ng-n/flux-gitops
           cp secret-manifest.enc.yaml flux-gitops/clusters/demo/secret-manifest.enc.yaml
           cd flux-gitops
