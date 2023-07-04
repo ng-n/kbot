@@ -95,10 +95,12 @@ jobs:
           git commit -am "update version $VERSION"
           git push
 
-      - name: Set up SSH to commit and push secret
+      - name: Set up SSH 
         uses: webfactory/ssh-agent@v0.5.0
         with:
           ssh-private-key: ${{ secrets.FLUX_OPS_KEY }}
+      
+      -name: Commit and Push secret
         run: |
           git clone git@github.com:ng-n/flux-gitops.git
           cd flux-gitops
