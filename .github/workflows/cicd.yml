@@ -93,3 +93,13 @@ jobs:
           git config user.email github-actions@github.com
           git commit -am "update version $VERSION"
           git push
+
+      - name: Commit and push secret
+        run: |
+          git clone git@github.com:ng-n/flux-gitops.git
+          cd flux-gitops
+          mkdir -p clusters/dev
+          cp secret-manifest.enc.yaml clusters/dev/secret-manifest.enc.yaml
+          git add clusters/dev/secret-enc.yaml
+          git commit -m "add encrypted secret"
+          git push origin main
