@@ -33,13 +33,13 @@ Run docker-compose -f otel/docker-compose.yaml
    docker-compose -f otel/docker-compose.yaml up
 ```
 Open Telegram kbot and test. Some output like below is expected.
-![](https://github.com/ng-n/kbot/tree/opentelemetry/otel/.data/kbot_output_img.png)
+![](https://github.com/ng-n/kbot/blob/opentelemetry/otel/.data/kbot_output_img.png)
 
 ### Access Grafana Dashboard: Select the `Web preview` on the right in the Google Cloud Shell and select `Change port`.
 Change Preview Port > Port number: 3002 > Change and Preview
 
 The landing page should look like below:
-![](https://github.com/ng-n/kbot/tree/opentelemetry/otel/.data/grafana_landing_page.png)
+![](https://github.com/ng-n/kbot/blob/opentelemetry/otel/.data/grafana_landing_page.png)
 
 Select `Configuration` > Add `data source` > Prometheus
 
@@ -50,15 +50,15 @@ Add URL http:///loki:3100 and Save & Test
 
 
 The result should look like below:
-![](https://github.com/ng-n/kbot/tree/opentelemetry/otel/.data/grafana_configuration.png)
+![](https://github.com/ng-n/kbot/blob/opentelemetry/otel/.data/grafana_configuration.png)
 
 ### Configure Data Source: In the Grafana dashboard, configure Prometheus and Grafana Loki as data sources. 
 Enter kbot in the `Metric` and select `kbot_bitcoin_total`
-![](https://github.com/ng-n/kbot/tree/opentelemetry/otel/.data/grafana_metric.png)
+![](https://github.com/ng-n/kbot/blob/opentelemetry/otel/.data/grafana_metric.png)
 
 ### Explore Metrics, Logs, and Traces: Customize the dashboards and panels according to your monitoring requirements.
 Select Explore > Loki
 Select `Label browser` > `OTLP` > `Show logs`
 Type `kbot` in the `Line contains`, then select `Operations` > `Line filter` > `Line contains` and type `hello`
 The result is below:
-![](https://github.com/ng-n/kbot/tree/opentelemetry/otel/.data/grafana_kbot_hello_explore.png)
+![](https://github.com/ng-n/kbot/blob/opentelemetry/otel/.data/grafana_kbot_hello_explore.png)
