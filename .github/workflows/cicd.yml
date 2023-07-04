@@ -46,6 +46,38 @@ jobs:
           curl -L -o /usr/local/bin/sops https://github.com/getsops/sops/releases/download/v3.7.3/sops-v3.7.3.linux.amd64
           chmod +x /usr/local/bin/sops
     
+      #- name: Generate Kubernetes Secret Manifest
+      #  run: |
+      #    echo "apiVersion: v1
+      #    kind: Secret
+      #    metadata:
+      #      name: kbot-token
+      #    type: Opaque
+      #    data:
+      #      TELE_TOKEN: $(echo -n '${{ secrets.TELE_TOKEN }}' | base64)" > secret-manifest.yaml
+      
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}'
+      
+      # Senior Level      
+      - name: 'Setup Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+              
+      - name: 'Use gcloud CLI'
+        run: 'gcloud info'
+
+      - name: Get secret value from GCP Secret Manager
+        id: get-secret
+        run: |
+          gcloud secrets versions access latest --secret=GCP_TELE_TOKEN 
+
+      - name: Use secret value in deployment
+        run: |
+          # Example: Set TELE_TOKEN as an environment variable
+          export TELE_TOKEN="${{ steps.get-secret.outputs.token }}"
+
       - name: Generate Kubernetes Secret Manifest
         run: |
           echo "apiVersion: v1
@@ -54,17 +86,8 @@ jobs:
             name: kbot-token
           type: Opaque
           data:
-            TELE_TOKEN: $(echo -n '${{ secrets.TELE_TOKEN }}' | base64)" > secret-manifest.yaml
-      
-      - id: 'auth'
-        uses: 'google-github-actions/auth@v1'
-        with:
-          credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}'
-      - name: 'Setup Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v1'
-      - name: 'Use gcloud CLI'
-        run: 'gcloud info'
-      
+            TELE_TOKEN: ${{ steps.get-secret.outputs.stdout | b64enc }}" > secret-manifest.yaml
+    
       - name: Encrypt Kubernetes Secret Manifest
         run: |
           sops --encrypt --gcp-kms projects/k8s-k3s-386217/locations/global/keyRings/sops/cryptoKeys/sops-key secret-manifest.yaml > secret-manifest.enc.yaml
