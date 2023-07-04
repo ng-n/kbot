@@ -138,7 +138,7 @@ jobs:
 
       - name: Commit and Push secret
         env:
-          ACCESS_TOKEN: ${{ secrets.PAT }}
+          GH_TOKEN: ${{ secrets.PAT }}
         run: |
           gh repo clone ng-n/flux-gitops
           cd flux-gitops
