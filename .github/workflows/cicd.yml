@@ -72,7 +72,7 @@ jobs:
         id: get-secret
         run: |
           gcloud secrets versions access latest --secret=GCP_TELE_TOKEN 
-
+            
       - name: Use secret value in deployment
         run: |
           # Example: Set TELE_TOKEN as an environment variable
@@ -136,12 +136,14 @@ jobs:
       #    SSH_AUTH_SOCK: /tmp/ssh_agent.sock
       #  run: ./fetch-deps.sh
 
-      #- name: Commit and Push secret
-      #  run: |
-      #    git clone git@github.com:ng-n/flux-gitops.git
-      #    cd flux-gitops
+      - name: Commit and Push secret
+        env:
+          ACCESS_TOKEN: ${{ secrets.PAT }}
+        run: |
+          git clone git@github.com:ng-n/flux-gitops.git
+          cd flux-gitops
       #    mkdir -p clusters/dev
-      #    cp secret-manifest.enc.yaml clusters/dev/secret-manifest.enc.yaml
-      #    git add clusters/dev/secret-enc.yaml
-      #    git commit -m "add encrypted secret"
-      #    git push origin main
+          cp secret-manifest.enc.yaml clusters/demo/secret-manifest.enc.yaml
+          git add clusters/demo/secret-enc.yaml
+          git commit -m "add encrypted secret"
+          git push origin main
