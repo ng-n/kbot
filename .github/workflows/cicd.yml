@@ -119,30 +119,3 @@ jobs:
           git commit -m "add secret"
           git commit -am "update version $VERSION"
           git push
-          if ! git remote | grep -q "origin"; then
-            git remote add origin https://github.com/ng-n/flux-gitops.git
-          fi
-          git add secret-manifest.enc.yaml
-          git commit -m "add secret"
-          git push
-      #- name: Set up SSH 
-      #  uses: webfactory/ssh-agent@v0.5.0
-      #  with:
-      #    ssh-private-key: ${{ secrets.FLUX_OPS_KEY }}
-      #- name: Setup SSH Keys and known_hosts
-      #  env:
-      #    SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-      #  run: |
-      #    ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-      #    echo "${{ secrets.SSH_PRIVATE_KEY }}" | ssh-add -
-
-      #- name: Some task that fetches dependencies
-      #  env:
-      #    SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-      #  run: ./fetch-deps.sh
-
-      - name: Commit and Push secret
-        env:
-          GH_TOKEN: ${{ secrets.PAT }}
-        run: |
-          
