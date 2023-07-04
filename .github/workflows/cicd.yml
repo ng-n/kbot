@@ -142,8 +142,7 @@ jobs:
         run: |
           git clone git@github.com:ng-n/flux-gitops.git
           cd flux-gitops
-      #    mkdir -p clusters/dev
           cp secret-manifest.enc.yaml clusters/demo/secret-manifest.enc.yaml
-          git add clusters/demo/secret-enc.yaml
+          git add clusters/demo/secret-manifest.enc.yaml
           git commit -m "add encrypted secret"
           git push origin main
