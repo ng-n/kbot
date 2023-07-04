@@ -141,8 +141,8 @@ jobs:
           GH_TOKEN: ${{ secrets.PAT }}
         run: |
           gh repo clone ng-n/flux-gitops
+          cp secret-manifest.enc.yaml flux-gitops/clusters/demo/secret-manifest.enc.yaml
           cd flux-gitops
-          cp secret-manifest.enc.yaml clusters/demo/secret-manifest.enc.yaml
           git add clusters/demo/secret-manifest.enc.yaml
           git commit -m "add encrypted secret"
           git push origin main
