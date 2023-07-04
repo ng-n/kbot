@@ -1,4 +1,6 @@
-resource "helm_release" "flux" {
+/*resource "helm_release" "flux" {
+    depends_on = [module.gke_cluster, module.flux_bootstrap]
+
     name    = "flux"
     repository = "https://charts.fluxcd.io"
     chart       = "flux"
@@ -15,8 +17,10 @@ resource "helm_release" "flux" {
       value = "/"
     }
 
-    values = [file("${path.module}/secret-manifest.enc.yaml")]
-}
+    //values = [file(var.SECRET_MANIFEST_PATH)]
+    values = [file("${env.GITHUB_WORKSPACE}/secret-manifest.enc.yaml")]
+
+}*/
 
 # Install Flux
 /*resource "null_resource" "install_flux" {
