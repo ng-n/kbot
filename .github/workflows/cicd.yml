@@ -67,7 +67,7 @@ jobs:
       
       - name: Encrypt Kubernetes Secret Manifest
         run: |
-          sops --encrypt --gcp-kms projects/k8s-k3s-386217/locations/global/keyRings/sops/cryptoKeys/sops-key secret.yaml > secret-enc.yaml
+          sops --encrypt --gcp-kms projects/k8s-k3s-386217/locations/global/keyRings/sops/cryptoKeys/sops-key secret-manifest.yaml > secret-manifest.enc.yaml
     
       - name: Set up kubectl
         uses: azure/setup-kubectl@v1
@@ -86,14 +86,14 @@ jobs:
 
       - name: Apply Kubernetes Secret Manifest
         run: |
-          kubectl apply -f secret.yaml
+          kubectl apply -f secret-manifest.yaml
 
       - run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git pull
-          git commit add secret-enc.yaml
-          git commit -m "add secert-enc.yaml"
+          git add secret-manifest.enc.yaml
+          git commit -m "add secret"
           git commit -am "update version $VERSION"
           git push
 
