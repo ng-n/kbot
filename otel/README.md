@@ -62,3 +62,5 @@ Select `Label browser` > `OTLP` > `Show logs`
 Type `kbot` in the `Line contains`, then select `Operations` > `Line filter` > `Line contains` and type `hello`
 The result is below:
 ![](https://github.com/ng-n/kbot/blob/opentelemetry/otel/.data/grafana_kbot_hello_explore.png)
+
+## [TODO]
