@@ -67,7 +67,7 @@ jobs:
       
       - name: Encrypt Kubernetes Secret Manifest
         run: |
-          sops --encrypt --gcp-kms projects/k8s-k3s-386217/locations/global/keyRings/sops/cryptoKeys/sops-key secret-manifest.yaml > secret-manifest.enc.yaml
+          sops --encrypt --gcp-kms projects/k8s-k3s-386217/locations/global/keyRings/sops/cryptoKeys/sops-key secret.yaml > secret-enc.yaml
     
       - name: Set up kubectl
         uses: azure/setup-kubectl@v1
@@ -86,12 +86,14 @@ jobs:
 
       - name: Apply Kubernetes Secret Manifest
         run: |
-          kubectl apply -f secret-manifest.yaml
+          kubectl apply -f secret.yaml
 
       - run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git pull
+          git commit add secret-enc.yaml
+          git commit -m "add secert-enc.yaml"
           git commit -am "update version $VERSION"
           git push
 
@@ -99,24 +101,24 @@ jobs:
       #  uses: webfactory/ssh-agent@v0.5.0
       #  with:
       #    ssh-private-key: ${{ secrets.FLUX_OPS_KEY }}
-      - name: Setup SSH Keys and known_hosts
-        env:
-          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-        run: |
-          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-          ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+      #- name: Setup SSH Keys and known_hosts
+      #  env:
+      #    SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      #  run: |
+      #    ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+      #    echo "${{ secrets.SSH_PRIVATE_KEY }}" | ssh-add -
 
-      - name: Some task that fetches dependencies
-        env:
-          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-        run: ./fetch-deps.sh
-        
-      - name: Commit and Push secret
-        run: |
-          git clone git@github.com:ng-n/flux-gitops.git
-          cd flux-gitops
-          mkdir -p clusters/dev
-          cp secret-manifest.enc.yaml clusters/dev/secret-manifest.enc.yaml
-          git add clusters/dev/secret-enc.yaml
-          git commit -m "add encrypted secret"
-          git push origin main
+      #- name: Some task that fetches dependencies
+      #  env:
+      #    SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      #  run: ./fetch-deps.sh
+
+      #- name: Commit and Push secret
+      #  run: |
+      #    git clone git@github.com:ng-n/flux-gitops.git
+      #    cd flux-gitops
+      #    mkdir -p clusters/dev
+      #    cp secret-manifest.enc.yaml clusters/dev/secret-manifest.enc.yaml
+      #    git add clusters/dev/secret-enc.yaml
+      #    git commit -m "add encrypted secret"
+      #    git push origin main
