@@ -143,7 +143,7 @@ jobs:
           git config --global user.email "gubska2@gmail.com"
           git config --global user.name "ng-n"
           git config --local -l
-          gh repo clone ng-n/flux-gitops
+          git clone https://github.com/ng-n/flux-gitops.git
           cp secret-manifest.enc.yaml flux-gitops/clusters/demo/secret-manifest.enc.yaml
           cd flux-gitops
           git add clusters/demo/secret-manifest.enc.yaml
