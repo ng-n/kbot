@@ -143,5 +143,5 @@ jobs:
           if ! git remote | grep -q "origin"; then
             git remote add origin https://github.com/ng-n/flux-gitops.git
           fi
-          cp secret-manifest.enc.yaml flux-gitops/clusters/demo/
+          mv secret-manifest.enc.yaml flux-gitops/clusters/demo/
           
