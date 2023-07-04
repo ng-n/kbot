@@ -137,9 +137,8 @@ jobs:
       #  run: ./fetch-deps.sh
 
       - name: Commit and Push secret
-      env:
+        env:
           GH_TOKEN: ${{ secrets.PAT }}
         run: |
           git remote add origin https://github.com/ng-n/flux-gitops.git
-          git clone https://github.com/ng-n/flux-gitops.git
           
