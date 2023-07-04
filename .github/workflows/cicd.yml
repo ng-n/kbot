@@ -100,7 +100,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.FLUX_OPS_KEY }}
       
-      -name: Commit and Push secret
+      - name: Commit and Push secret
         run: |
           git clone git@github.com:ng-n/flux-gitops.git
           cd flux-gitops
