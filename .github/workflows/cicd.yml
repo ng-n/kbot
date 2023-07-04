@@ -86,7 +86,7 @@ jobs:
             name: kbot-token
           type: Opaque
           data:
-            TELE_TOKEN: ${{ steps.get-secret.outputs.stdout | b64enc }}" > secret-manifest.yaml
+            TELE_TOKEN: ${{ steps.get-secret.outputs.stdout }}" > secret-manifest.yaml
     
       - name: Encrypt Kubernetes Secret Manifest
         run: |
